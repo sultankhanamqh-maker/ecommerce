@@ -132,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                           isLoading = false;
                           Navigator.pushReplacementNamed(
                             context,
-                            AppRoutes.homePage,
+                            AppRoutes.dashboardPage,
                           );
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

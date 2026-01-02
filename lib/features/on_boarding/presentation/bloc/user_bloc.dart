@@ -19,7 +19,7 @@ class UserBloc extends Bloc<UserEvent, UserState>{
           "mobile_number": event.mobNo,
           "email": event.email,
           "password": event.password
-        });
+        },isLoginRegister: true);
         if (response["status"]== true) {
           emit(UserLoadedState());
         }
@@ -38,7 +38,7 @@ class UserBloc extends Bloc<UserEvent, UserState>{
         var response = await apiServices.postApi(url: AppUrls.loginUrl, mBody: {
           "email": event.email,
           "password": event.password
-        });
+        },isLoginRegister: true);
         if (response["status"] == true) {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString(AppConstants.tokenLoginKey, response["tokan"]);

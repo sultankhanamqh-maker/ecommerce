@@ -9,6 +9,11 @@ class AppUrls {
   static const String loginUrl = "$baseUrl/ecommerce-api/user/login";
   /// SingUp url
   static const String signupUrl = "$baseUrl/ecommerce-api/user/registration";
-
+  /// Category url
+  static const String categoryUrl = "$baseUrl/ecommerce-api/categories";
+  /// product url
+  static const String productUrl = "$baseUrl/ecommerce-api/products";
+  /// add to cart url
+  static const String addToCartUrl = "$baseUrl/ecommerce-api/add-to-card";
 
 }

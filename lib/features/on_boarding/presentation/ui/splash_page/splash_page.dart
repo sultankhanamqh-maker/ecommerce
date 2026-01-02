@@ -15,7 +15,7 @@ class SplashPage extends StatelessWidget {
       String token = prefs.getString(AppConstants.tokenLoginKey) ?? "";
       String nextPage = AppRoutes.loginPage;
       if(token.isNotEmpty){
-       nextPage = AppRoutes.homePage;
+       nextPage = AppRoutes.dashboardPage;
       }
       Navigator.pushReplacementNamed(context, nextPage);
     });

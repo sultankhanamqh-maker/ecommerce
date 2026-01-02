@@ -1,13 +1,26 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ecommerce/core/constants/app_constants.dart';
 import 'package:ecommerce/core/exception/app_exceptions.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiServices {
-  dynamic getApi({required String url}) async {
+  dynamic getApi({
+    required String url,
+    Map<String, String>? mHeader,
+    bool isLoginRegister = false,
+  }) async {
+    if (!isLoginRegister) {
+      mHeader ??= {};
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var token = prefs.getString(AppConstants.tokenLoginKey) ?? "";
+      mHeader["Authorization"] = "Bearer $token";
+    }
     try {
-      var res = await http.get(Uri.parse(url));
+      var res = await http.get(Uri.parse(url), headers: mHeader);
+
       return reResponse(res);
     } on SocketException catch (e) {
       throw NoInternetException(msg: e.toString());
@@ -16,13 +29,25 @@ class ApiServices {
     }
   }
 
-  postApi({required String url, Map<String, dynamic>? mBody}) async {
+  Future<dynamic> postApi({
+    required String url,
+    Map<String, dynamic>? mBody,
+    Map<String, String>? mHeader,
+    bool isLoginRegister = false,
+  }) async {
     Uri uri = Uri.parse(url);
+    if (!isLoginRegister) {
+      mHeader ??= {};
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var token = prefs.getString(AppConstants.tokenLoginKey) ?? "";
+      mHeader["Authorization"] = "Bearer $token";
+    }
 
     try {
       var res = await http.post(
         uri,
         body: mBody != null ? jsonEncode(mBody) : null,
+        headers: mHeader
       );
       return reResponse(res);
     } on SocketException catch (e) {
