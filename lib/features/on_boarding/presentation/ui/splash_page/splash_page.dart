@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../../core/constants/app_colors.dart';
+
 class SplashPage extends StatelessWidget {
 
   @override
@@ -20,7 +22,7 @@ class SplashPage extends StatelessWidget {
       Navigator.pushReplacementNamed(context, nextPage);
     });
     return Scaffold(
-      backgroundColor: AppConstants.appColor,
+      backgroundColor: AppColors.mainAppColor,
       body: Center(child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

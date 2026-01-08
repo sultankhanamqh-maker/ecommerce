@@ -7,6 +7,11 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiServices {
+
+  ApiServices._();
+
+  static ApiServices  apiServices = ApiServices._();
+
   dynamic getApi({
     required String url,
     Map<String, String>? mHeader,
@@ -25,7 +30,7 @@ class ApiServices {
     } on SocketException catch (e) {
       throw NoInternetException(msg: e.toString());
     } catch (e) {
-      print(e);
+      throw Exception(e.toString());
     }
   }
 
@@ -53,7 +58,7 @@ class ApiServices {
     } on SocketException catch (e) {
       throw NoInternetException(msg: e.toString());
     } catch (e) {
-      print(e);
+      throw Exception(e.toString());
     }
   }
 

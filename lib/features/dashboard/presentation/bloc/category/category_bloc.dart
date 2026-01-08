@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ecommerce/core/constants/app_urls.dart';
 import 'package:ecommerce/core/services/api_services.dart';
 import 'package:ecommerce/features/dashboard/data/model/category_model.dart';
@@ -5,7 +7,7 @@ import 'package:ecommerce/features/dashboard/presentation/bloc/category/category
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'category_state.dart';
 
-class CategoryBloc extends Bloc<CategoryGetEvent,CategoryState>{
+class CategoryBloc extends Bloc<CategoryEvent,CategoryState>{
   ApiServices apiServices;
   CategoryBloc({required this.apiServices}) : super(CatInitialState()){
 
@@ -30,6 +32,8 @@ class CategoryBloc extends Bloc<CategoryGetEvent,CategoryState>{
       }
 
     });
+
+
 
   }
 

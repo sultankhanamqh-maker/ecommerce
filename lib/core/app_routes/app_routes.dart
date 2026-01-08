@@ -1,12 +1,14 @@
 
+import 'package:ecommerce/features/category_page/category_detail_page.dart';
+import 'package:ecommerce/features/dashboard/presentation/ui/nav_pages/cart_nav_page/cart_nav_page.dart';
 import 'package:ecommerce/features/on_boarding/presentation/ui/login_page/login_page.dart';
 import 'package:ecommerce/features/on_boarding/presentation/ui/signup_page/signup_page.dart';
 import 'package:ecommerce/features/on_boarding/presentation/ui/splash_page/splash_page.dart';
-import 'package:ecommerce/features/detail/detail_page.dart';
-import 'package:ecommerce/features/dashboard/presentation/ui/nav_pages/home_nav_page/home_nav_page.dart';
+import 'package:ecommerce/features/detail/detail_product_page.dart';
 import 'package:flutter/cupertino.dart';
-
 import '../../features/dashboard/presentation/ui/dashboard_page/dashboard_page.dart';
+import '../../features/orders/presentation/ui/order/order_page.dart';
+import '../../features/product/product_detail_page.dart';
 
 class AppRoutes {
 
@@ -15,6 +17,11 @@ class AppRoutes {
   static const String signUpPage = "signUpPage";
   static const String splashPage = "SplashPage";
   static const String dashboardPage = "dashboardPage";
+  static const String cartNavPage = "cartNavPage";
+  static const String orderPage = "orderPage";
+  static const String productDetailPage = "productDetailPage";
+  static const String categoryDetailPage = "categoryDetailPage";
+
 
 
  static Map<String , WidgetBuilder> routes =
@@ -24,6 +31,10 @@ class AppRoutes {
     signUpPage : (_) => SignupPage(),
     splashPage : (_) => SplashPage(),
     dashboardPage : (_) => DashboardPage(),
+    cartNavPage : (_) => CartNavPage(),
+    orderPage : (_) => OrderPage(),
+    productDetailPage : (_) => ProductDetailPage(),
+    categoryDetailPage : (_) => CategoryDetailPage(),
   };
 
 

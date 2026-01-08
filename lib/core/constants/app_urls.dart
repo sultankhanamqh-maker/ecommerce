@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class AppUrls {
 
@@ -14,6 +13,22 @@ class AppUrls {
   /// product url
   static const String productUrl = "$baseUrl/ecommerce-api/products";
   /// add to cart url
-  static const String addToCartUrl = "$baseUrl/ecommerce-api/add-to-card";
+  static const String addToCartUrl = "$baseUrl/ecommerce-api/add-to-cart";
+  /// view Cart url
+  static const String viewCartUrl = "$baseUrl/ecommerce-api/product/view-cart";
+  /// create Order url
+  static const String createOrderUrl = "$baseUrl/ecommerce-api/product/create-order";
+  /// delete Order url
+  static const String deleteOrderUrl = "$baseUrl/ecommerce-api/product/delete-cart";
+  /// decrement quantity url
+  static const String decrementQuantityUrl = "$baseUrl/ecommerce-api/product/decrement-quantity";
+  /// get profile url
+  static const String getProfileUrl = "$baseUrl/ecommerce-api/user/profile";
+  /// get orders url
+  static const String getOrdersUrl = "$baseUrl/ecommerce-api/product/get-order";
+
 
 }
+
+
+

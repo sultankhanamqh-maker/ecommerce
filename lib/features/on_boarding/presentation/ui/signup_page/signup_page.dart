@@ -1,4 +1,3 @@
-import 'package:ecommerce/core/app_routes/app_routes.dart';
 import 'package:ecommerce/core/constants/app_constants.dart';
 import 'package:ecommerce/core/ui_helper/custom_widgets/elevated_btn.dart';
 import 'package:ecommerce/core/ui_helper/ui_helper/textfield_decor.dart';
@@ -8,6 +7,8 @@ import 'package:ecommerce/features/on_boarding/presentation/bloc/user_state.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../core/constants/app_colors.dart';
 
 class SignupPage extends StatelessWidget {
   bool isPasswordVisible = false;
@@ -29,7 +30,7 @@ class SignupPage extends StatelessWidget {
           Container(
             width: double.infinity,
             height: double.infinity,
-            color: AppConstants.appColor,
+            color: AppColors.mainAppColor,
           ),
           Center(
             child: Container(
@@ -78,7 +79,7 @@ class SignupPage extends StatelessWidget {
                         if (value == null || value.isEmpty) {
                           return "Please Enter your Name";
                         }
-                        if (value!.length < 10) {
+                        if (value.length < 10) {
                           return "Please enter a valid number";
                         }
                         return null;
@@ -233,7 +234,7 @@ class SignupPage extends StatelessWidget {
                               text: "Log In",
                               style: TextStyle(
                                 color: Colors.white,
-                                backgroundColor: AppConstants.appColor,
+                                backgroundColor: AppColors.mainAppColor,
                               ),
                             ),
                           ],

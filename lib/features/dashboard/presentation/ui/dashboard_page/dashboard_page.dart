@@ -1,7 +1,10 @@
-import 'package:ecommerce/core/constants/app_constants.dart';
+import 'package:ecommerce/core/constants/app_colors.dart';
+import 'package:ecommerce/features/dashboard/presentation/ui/nav_pages/cart_nav_page/cart_nav_page.dart';
 import 'package:ecommerce/features/dashboard/presentation/ui/nav_pages/home_nav_page/home_nav_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../nav_pages/accont_nav_page/account_nav_page.dart';
 
 class DashboardPage extends StatefulWidget{
   @override
@@ -15,8 +18,8 @@ class _DashboardPageState extends State<DashboardPage> {
     HomeNavPage(),
     HomeNavPage(),
     HomeNavPage(),
-    HomeNavPage(),
-    HomeNavPage()
+    CartNavPage(),
+    AccountNavPage(),
   ];
 
   @override
@@ -24,6 +27,7 @@ class _DashboardPageState extends State<DashboardPage> {
     return Scaffold(
       body:mPages[selectedIndex] ,
       bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
         shape: CircularNotchedRectangle(),
         notchMargin: 7,
         child: Row(
@@ -34,33 +38,33 @@ class _DashboardPageState extends State<DashboardPage> {
               setState(() {
 
               });
-            }, icon: Icon(Icons.menu_open_outlined,color: selectedIndex == 0 ? AppConstants.appColor.withAlpha(80) : Colors.grey)),
+            }, icon: Icon(Icons.menu_open_outlined,color: selectedIndex == 0 ? AppColors.mainAppColor.withAlpha(80) : Colors.grey)),
             IconButton(onPressed: (){
               selectedIndex = 1;
               setState(() {
 
               });
-            }, icon: Icon(Icons.favorite_outline,color: selectedIndex == 1 ? AppConstants.appColor.withAlpha(80) : Colors.grey)),
+            }, icon: Icon(Icons.favorite_outline,color: selectedIndex == 1 ? AppColors.mainAppColor.withAlpha(80) : Colors.grey)),
             SizedBox(width: 70,),
             IconButton(onPressed: (){
               selectedIndex = 3;
               setState(() {
 
               });
-            }, icon: Icon(Icons.shopping_cart_outlined,color: selectedIndex == 3 ? AppConstants.appColor.withAlpha(80) : Colors.grey)),
+            }, icon: Icon(Icons.shopping_cart_outlined,color: selectedIndex == 3 ? AppColors.mainAppColor.withAlpha(80) : Colors.grey)),
             IconButton(onPressed: (){
               selectedIndex = 4;
               setState(() {
 
               });
-            }, icon: Icon(Icons.account_circle_outlined,color: selectedIndex == 4 ? AppConstants.appColor.withAlpha(80) : Colors.grey)),
+            }, icon: Icon(Icons.account_circle_outlined,color: selectedIndex == 4 ? AppColors.mainAppColor.withAlpha(80) : Colors.grey)),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(50)
-      ),backgroundColor: AppConstants.appColor,onPressed: (){
+      ),backgroundColor: AppColors.mainAppColor,onPressed: (){
         selectedIndex = 2;
         setState(() {
 

@@ -8,10 +8,11 @@ import 'package:ecommerce/features/dashboard/presentation/bloc/product/product_b
 import 'package:ecommerce/features/dashboard/presentation/bloc/product/product_event.dart';
 import 'package:ecommerce/features/dashboard/presentation/bloc/product/product_state.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slider_indicator/flutter_slider_indicator.dart';
+
+import '../../../../../../core/constants/app_colors.dart';
 
 
 
@@ -21,48 +22,15 @@ class HomeNavPage extends StatefulWidget {
 }
 
 class _HomeNavPageState extends State<HomeNavPage> {
-  List<Map<String, dynamic>> listCos = [
+
+  List<Map<String,dynamic>> listCos = [
     {
-      "name": "shoes",
-      "image":
-          "https://images.pexels.com/photos/19090/pexels-photo.jpg?_gl=1*puumzt*_ga*ODk1MDkxNDI5LjE3NTgxOTAwNjc.*_ga_8JE65Q40S6*czE3NjA5MTM0MjMkbzMkZzEkdDE3NjA5MTM2MDckajU5JGwwJGgw",
+    "image" : "https://images.pexels.com/photos/19090/pexels-photo.jpg?_gl=1*puumzt*_ga*ODk1MDkxNDI5LjE3NTgxOTAwNjc.*_ga_8JE65Q40S6*czE3NjA5MTM0MjMkbzMkZzEkdDE3NjA5MTM2MDckajU5JGwwJGgw",
     },
     {
-      "name": "Beauty",
-      "image":
-          "https://images.pexels.com/photos/2113855/pexels-photo-2113855.jpeg?_gl=1*bl88vu*_ga*ODk1MDkxNDI5LjE3NTgxOTAwNjc.*_ga_8JE65Q40S6*czE3NjA5MTM0MjMkbzMkZzEkdDE3NjA5MTM2OTEkajM5JGwwJGgw",
-    },
-    {
-      "name": "Women's Fashion",
-      "image":
-          "https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?_gl=1*107jry6*_ga*ODk1MDkxNDI5LjE3NTgxOTAwNjc.*_ga_8JE65Q40S6*czE3NjA5MTM0MjMkbzMkZzEkdDE3NjA5MTM3ODEkajYwJGwwJGgw",
-    },
-    {
-      "name": "Jewelry",
-      "image":
-          "https://images.pexels.com/photos/248077/pexels-photo-248077.jpeg?_gl=1*1kmjjnf*_ga*ODk1MDkxNDI5LjE3NTgxOTAwNjc.*_ga_8JE65Q40S6*czE3NjA5MTM0MjMkbzMkZzEkdDE3NjA5MTM4OTIkajYwJGwwJGgw",
-    },
-    {
-      "name": "shoes",
-      "image":
-          "https://images.pexels.com/photos/19090/pexels-photo.jpg?_gl=1*puumzt*_ga*ODk1MDkxNDI5LjE3NTgxOTAwNjc.*_ga_8JE65Q40S6*czE3NjA5MTM0MjMkbzMkZzEkdDE3NjA5MTM2MDckajU5JGwwJGgw",
-    },
-    {
-      "name": "Beauty",
-      "image":
-          "https://images.pexels.com/photos/2113855/pexels-photo-2113855.jpeg?_gl=1*bl88vu*_ga*ODk1MDkxNDI5LjE3NTgxOTAwNjc.*_ga_8JE65Q40S6*czE3NjA5MTM0MjMkbzMkZzEkdDE3NjA5MTM2OTEkajM5JGwwJGgw",
-    },
-    {
-      "name": "Women's Fashion",
-      "image":
-          "https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?_gl=1*107jry6*_ga*ODk1MDkxNDI5LjE3NTgxOTAwNjc.*_ga_8JE65Q40S6*czE3NjA5MTM0MjMkbzMkZzEkdDE3NjA5MTM3ODEkajYwJGwwJGgw",
-    },
-    {
-      "name": "Jewelry",
-      "image":
-          "https://images.pexels.com/photos/248077/pexels-photo-248077.jpeg?_gl=1*1kmjjnf*_ga*ODk1MDkxNDI5LjE3NTgxOTAwNjc.*_ga_8JE65Q40S6*czE3NjA5MTM0MjMkbzMkZzEkdDE3NjA5MTM4OTIkajYwJGwwJGgw",
-    },
-  ];
+      "image" : "https://images.pexels.com/photos/2113855/pexels-photo-2113855.jpeg?_gl=1*bl88vu*_ga*ODk1MDkxNDI5LjE3NTgxOTAwNjc.*_ga_8JE65Q40S6*czE3NjA5MTM0MjMkbzMkZzEkdDE3NjA5MTM2OTEkajM5JGwwJGgw",
+    }
+      ];
 
   List<String> mBanners = [
     "https://coreldrawdesign.com/resources/previews/preview-special-offer-discount-sale-banner-template-1601301453.webp",
@@ -72,11 +40,18 @@ class _HomeNavPageState extends State<HomeNavPage> {
   ];
 
   int selectedIndex = 0;
+  List<Color> mColors= [
+    Colors.red,
+    Colors.green,
+    Colors.orangeAccent,
+    Colors.black,
+    Colors.blue,
+  ];
 
   @override
   void initState() {
     super.initState();
-    context.read<ProductBloc>().add(FatchAllProductEvent());
+    context.read<ProductBloc>().add(FetchAllProductEvent());
     context.read<CategoryBloc>().add(CategoryGetEvent());
   }
 
@@ -197,22 +172,27 @@ class _HomeNavPageState extends State<HomeNavPage> {
                         scrollDirection: Axis.horizontal,
                         itemCount: state.allCat.length,
                         itemBuilder: (context, index) {
-                          print(state.allCat[index].name);
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                                child: CircleAvatar(
-                                  radius: 30,
-                                  backgroundImage: NetworkImage(
-                                    listCos[index]["image"],
+                          var data = state.allCat[index];
+                          return InkWell(
+                            onTap: (){
+                              ///Navigator.pushNamed(context, AppRoutes.categoryDetailPage,arguments: index+1);
+                            },
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                  child: CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: NetworkImage(
+                                      listCos[index]["image"],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: 8),
-                              state.allCat[index].name != null ? Text(state.allCat[index].name!): Text(""),
-                            ],
+                                SizedBox(height: 8),
+                                state.allCat[index].name != null ? Text(data.name!): Text(""),
+                              ],
+                            ),
                           );
                         },
                       ) : Center(child: Text("No Category Found"),);
@@ -227,9 +207,18 @@ class _HomeNavPageState extends State<HomeNavPage> {
                   }
                 ),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                    Text("Special For You",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                    TextButton(onPressed: (){
+                      Navigator.pushNamed(context, AppRoutes.productDetailPage);
+                    }, child: Text("See all",style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.mainAppColor),)),
+                ],
+              ),
               Expanded(
                 flex: 5,
-                child: BlocBuilder<ProductBloc,ProductState>(
+                child:  BlocBuilder<ProductBloc,ProductState>(
                   builder: (context,state){
                     if(state is ProductLoadingState){
                       return Center(child: CircularProgressIndicator());
@@ -266,7 +255,7 @@ class _HomeNavPageState extends State<HomeNavPage> {
                                         width: 22,
                                         height: 22,
                                         decoration: BoxDecoration(
-                                          color: AppConstants.appColor,
+                                          color: AppColors.mainAppColor,
                                           borderRadius: BorderRadius.only(
                                             bottomLeft: Radius.circular(8),
                                             topRight: Radius.circular(12),
@@ -286,30 +275,102 @@ class _HomeNavPageState extends State<HomeNavPage> {
                                     Row(
                                       children: [
                                       data.price != null ? Expanded(child: Text(data.price!)) : Text(""),
-                                        Container(
-                                          width: 20,
-                                          height: 20,
-                                          decoration: BoxDecoration(
-                                            color: Colors.black,
-                                            shape: BoxShape.circle,
+                                        mColors.length > 4
+                                            ? Row(
+                                          children: List.generate(4, (
+                                              index,
+                                              ) {
+                                            if (index == 3) {
+                                              return Container(
+                                                margin: EdgeInsets.only(
+                                                  left: 2,
+                                                ),
+                                                width: 20,
+                                                height: 20,
+                                                decoration:
+                                                BoxDecoration(
+                                                  shape: BoxShape
+                                                      .circle,
+                                                  border: Border.all(
+                                                    color:
+                                                    Colors.grey,
+                                                  ),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    "+${mColors.length - 3}",
+                                                    style: TextStyle(
+                                                      fontSize: 11,
+                                                      color:
+                                                      Colors.grey,
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              return Container(
+                                                margin: EdgeInsets.only(
+                                                  left: 2,
+                                                ),
+                                                width: 20,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                  shape:
+                                                  BoxShape.circle,
+                                                  border: Border.all(
+                                                    color:
+                                                    mColors[index],
+                                                  ),
+                                                ),
+                                                child: Container(
+                                                  margin:
+                                                  EdgeInsets.all(1),
+                                                  decoration:
+                                                  BoxDecoration(
+                                                    shape: BoxShape
+                                                        .circle,
+                                                    color:
+                                                    mColors[index],
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          }),
+                                        )
+                                            : Row(
+                                          children: List.generate(
+                                            mColors.length,
+                                                (index) {
+                                              return Container(
+                                                margin: EdgeInsets.only(
+                                                  left: 2,
+                                                ),
+                                                width: 20,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                  shape:
+                                                  BoxShape.circle,
+                                                  border: Border.all(
+                                                    color:
+                                                    mColors[index],
+                                                  ),
+                                                ),
+                                                child: Container(
+                                                  margin:
+                                                  EdgeInsets.all(1),
+                                                  decoration:
+                                                  BoxDecoration(
+                                                    shape: BoxShape
+                                                        .circle,
+                                                    color:
+                                                    mColors[index],
+                                                  ),
+                                                ),
+                                              );
+                                            },
                                           ),
                                         ),
-                                        Container(
-                                          width: 20,
-                                          height: 20,
-                                          decoration: BoxDecoration(
-                                            color: Colors.red,
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 20,
-                                          height: 20,
-                                          decoration: BoxDecoration(
-                                            color: Colors.orange,
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
+
                                       ],
                                     ),
                                   ],

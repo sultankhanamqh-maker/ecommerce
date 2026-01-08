@@ -1,6 +1,7 @@
-import 'package:ecommerce/core/constants/app_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../constants/app_colors.dart';
 
 class ElevatedBtn extends StatelessWidget {
   String btnName;
@@ -18,7 +19,7 @@ class ElevatedBtn extends StatelessWidget {
     this.widget,
     this.width = double.infinity,
     this.bgColor = Colors.white,
-    this.fgColor = AppConstants.appColor
+    this.fgColor = AppColors.mainAppColor
 
   });
 

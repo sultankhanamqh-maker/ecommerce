@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/constants/app_colors.dart';
 import '../../bloc/user_bloc.dart';
 
 class LoginPage extends StatefulWidget {
@@ -36,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             width: double.infinity,
             height: double.infinity,
-            color: AppConstants.appColor,
+            color: AppColors.mainAppColor,
           ),
           Center(
             child: Container(
@@ -177,7 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                               text: "Sign Up",
                               style: TextStyle(
                                 color: Colors.white,
-                                backgroundColor: AppConstants.appColor,
+                                backgroundColor: AppColors.mainAppColor,
                               ),
                             ),
                           ],

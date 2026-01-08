@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-InputDecoration textFieldDecor({required String hint,required String label,bool isIcon= false, VoidCallback? onTap,bool isVisible = false }){
+InputDecoration textFieldDecor({required String hint,required String label,bool isIcon= false, VoidCallback? onTap,bool isVisible = false}){
   return InputDecoration(
       suffixIcon: isIcon ? IconButton(color: Colors.white,onPressed: onTap,icon: Icon(isVisible ?Icons.visibility_outlined : Icons.visibility_off_outlined)) : null,
       hint: Text(hint,style: TextStyle(color: Colors.white),),
