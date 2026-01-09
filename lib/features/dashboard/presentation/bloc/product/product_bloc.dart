@@ -36,7 +36,7 @@ class ProductBloc extends Bloc<ProductEvent,ProductState>{
       emit(ProductLoadingState());
       try{
         var res =  await apiServices.postApi(url: AppUrls.productUrl,mBody: {
-          "category_id":event.categoryId
+          "category_id":event.categoryId.toString()
         });
         if(res["status"]){
           List<dynamic> data = res["data"];
@@ -44,7 +44,7 @@ class ProductBloc extends Bloc<ProductEvent,ProductState>{
           for(Map<String,dynamic> eachProduct in data){
             mData.add(ProductModel.fromJson(eachProduct));
           }
-          emit(ProductLoadedState(allProduct: mData));
+          emit(ProductLoadedState(allProduct: mData,productId: event.categoryId));
         }
         else{
           emit(ProductErrorState(errorMsg: res["message"]));

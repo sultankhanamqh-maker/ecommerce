@@ -94,29 +94,27 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                 ),
                               ),
                               Expanded(
-                                child: data.image != null
-                                    ? Padding(
+                                child:
+                                     Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Image.network(data.image!),
+                                        child: Image.network(data.image),
                                       )
-                                    : Image.asset(""),
+                                    ,
                               ),
-                              data.name != null
-                                  ? Text(
-                                      data.name!,
+                              Text(
+                                      data.name,
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                    )
-                                  : Text(""),
+                                    ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
                                   children: [
-                                    data.price != null
-                                        ? Expanded(child: Text(data.price!))
-                                        : Text(""),
+
+                                         Expanded(child: Text(data.price))
+                                       ,
 
                                     Row(
                                       children: List.generate(mColor.length, (

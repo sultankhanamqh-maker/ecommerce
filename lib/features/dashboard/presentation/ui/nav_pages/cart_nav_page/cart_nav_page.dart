@@ -1,11 +1,9 @@
 import 'package:ecommerce/core/constants/app_colors.dart';
 import 'package:ecommerce/core/ui_helper/custom_widgets/elevated_btn.dart';
-import 'package:ecommerce/features/dashboard/data/model/cart_model.dart';
-import 'package:ecommerce/features/dashboard/data/model/product_model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../core/constants/app_constants.dart';
 import '../../../bloc/cart/cart_bloc.dart';
 import '../../../bloc/cart/cart_event.dart';
 import '../../../bloc/cart/cart_state.dart';
@@ -121,10 +119,18 @@ class _CartNavPageState extends State<CartNavPage> {
                                                 IconButton(
                                                   onPressed: () {
                                                     List<int> cartIds = [];
-                                                    for(var eachItem in state.allCart!){
+                                                    for (var eachItem
+                                                        in state.allCart!) {
                                                       cartIds.add(eachItem.id!);
                                                     }
-                                                    context.read<CartBloc>().add(DeleteCartEvent(catId: cartIds[index]));
+                                                    context
+                                                        .read<CartBloc>()
+                                                        .add(
+                                                          DeleteCartEvent(
+                                                            catId:
+                                                                cartIds[index],
+                                                          ),
+                                                        );
                                                   },
                                                   icon: Icon(
                                                     Icons.delete_outline,
@@ -172,8 +178,15 @@ class _CartNavPageState extends State<CartNavPage> {
                                                     children: [
                                                       InkWell(
                                                         onTap: () {
-                                                          if (data.quantity! > 1) {
-                                                            context.read<CartBloc>().add(DecrementCartEvent(productId: data.productId!, quantity: data.quantity! - 1));
+                                                          if (data.quantity! >
+                                                              1) {
+                                                            context.read<CartBloc>().add(
+                                                              DecrementCartEvent(
+                                                                productId: data
+                                                                    .productId!,
+                                                                quantity: 1,
+                                                              ),
+                                                            );
                                                           }
                                                         },
                                                         child: const Text(
@@ -196,9 +209,7 @@ class _CartNavPageState extends State<CartNavPage> {
                                                       ),
                                                       const SizedBox(width: 15),
                                                       InkWell(
-                                                        onTap: () {
-                                                          context.read<CartBloc>().add(DecrementCartEvent(productId: data.productId!, quantity: data.quantity! + 1));
-                                                        },
+                                                        onTap: () {},
                                                         child: const Text(
                                                           "+",
                                                           style: TextStyle(
@@ -330,21 +341,27 @@ class _CartNavPageState extends State<CartNavPage> {
                         ).showSnackBar(SnackBar(content: Text(state.errorMsg)));
                       }
                     },
-                    builder:(_,state){
-                      if(state is CartLoadedState && state.allCart != null){
+                    builder: (_, state) {
+                      if (state is CartLoadedState && state.allCart != null) {
                         return ElevatedBtn(
                           btnName: "Check Out",
                           onTap: () {
-                            for(var eachItem in state.allCart!){
+                            for (var eachItem in state.allCart!) {
                               int productId = eachItem.productId!;
-                              context.read<CartBloc>().add(CreateOrderEvent(productId: productId,status: 1));}
+                              context.read<CartBloc>().add(
+                                CreateOrderEvent(
+                                  productId: productId,
+                                  status: 1,
+                                ),
+                              );
+                            }
                           },
                           bgColor: AppColors.mainAppColor,
                           fgColor: Colors.white,
                         );
                       }
                       return Container();
-                    }
+                    },
                   ),
                 ],
               ),

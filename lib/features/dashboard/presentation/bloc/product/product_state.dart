@@ -7,8 +7,9 @@ class ProductInitialState extends ProductState{}
 class ProductLoadingState extends ProductState{}
 
 class ProductLoadedState extends ProductState{
- List<ProductModel> allProduct;
- ProductLoadedState({required this.allProduct});
+  final int? productId;
+  List<ProductModel> allProduct;
+  ProductLoadedState({required this.allProduct,  this.productId});
 }
 
 class ProductErrorState extends ProductState{

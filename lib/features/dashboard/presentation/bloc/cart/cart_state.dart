@@ -11,12 +11,13 @@ class CartLoadingState extends CartState{}
 
 class CartLoadedState extends CartState{
   final List<CartViewModel>? allCart;
+  final int? updatingProductId;
 
-  CartLoadedState({this.allCart});
+  CartLoadedState({this.allCart,this.updatingProductId});
   @override
-   List<Object?> get props => [allCart];
-
+   List<Object?> get props => [allCart,updatingProductId];
 }
+
 
 class CartErrorState extends CartState{
 

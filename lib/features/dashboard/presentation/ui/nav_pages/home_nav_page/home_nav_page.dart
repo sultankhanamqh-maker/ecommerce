@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce/core/app_routes/app_routes.dart';
 import 'package:ecommerce/core/constants/app_constants.dart';
+import 'package:ecommerce/core/services/api_services.dart';
 import 'package:ecommerce/features/dashboard/presentation/bloc/category/category_bloc.dart';
 import 'package:ecommerce/features/dashboard/presentation/bloc/category/category_event.dart';
 import 'package:ecommerce/features/dashboard/presentation/bloc/category/category_state.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slider_indicator/flutter_slider_indicator.dart';
 
 import '../../../../../../core/constants/app_colors.dart';
+import '../../../../../category_page/category_detail_page.dart';
 
 
 
@@ -175,7 +177,8 @@ class _HomeNavPageState extends State<HomeNavPage> {
                           var data = state.allCat[index];
                           return InkWell(
                             onTap: (){
-                              ///Navigator.pushNamed(context, AppRoutes.categoryDetailPage,arguments: index+1);
+                              Navigator.pushNamed(context, AppRoutes.categoryDetailPage,arguments: int.parse(data.id.toString()));
+
                             },
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -185,7 +188,7 @@ class _HomeNavPageState extends State<HomeNavPage> {
                                   child: CircleAvatar(
                                     radius: 30,
                                     backgroundImage: NetworkImage(
-                                      listCos[index]["image"],
+                                      listCos[index % listCos.length]["image"] as String,
                                     ),
                                   ),
                                 ),
@@ -226,160 +229,162 @@ class _HomeNavPageState extends State<HomeNavPage> {
                     if(state is ProductErrorState){
                       return Center(child: ScaffoldMessenger(child: Text(state.errorMsg)),);
                     }
-                    if(state is ProductLoadedState){
-                      return GridView.builder(
-                        itemCount: state.allProduct.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 4 / 6,
-                        ),
-                        itemBuilder: (_, index) {
-                          var data = state.allProduct[index];
-                          return state.allProduct.isNotEmpty ? InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                AppRoutes.detailPage,
-                                arguments: data,
-                              );
-                            },
+                    if(state is ProductLoadedState ){
 
-                            child: Card(
-                              child: Container(
-                                padding: EdgeInsets.all(8),
-                                child: Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.topRight,
-                                      child: Container(
-                                        width: 22,
-                                        height: 22,
-                                        decoration: BoxDecoration(
-                                          color: AppColors.mainAppColor,
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(8),
-                                            topRight: Radius.circular(12),
+                        return GridView.builder(
+                          itemCount: state.allProduct.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 4 / 6,
+                          ),
+                          itemBuilder: (_, index) {
+                            var data = state.allProduct[index];
+                            return state.allProduct.isNotEmpty ? InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.detailPage,
+                                  arguments: data,
+                                );
+                              },
+
+                              child: Card(
+                                child: Container(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                        child: Container(
+                                          width: 22,
+                                          height: 22,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.mainAppColor,
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(8),
+                                              topRight: Radius.circular(12),
+                                            ),
+                                          ),
+                                          child: Icon(
+                                            Icons.favorite_border_rounded,
+                                            color: Colors.white,
+                                            size: 15,
                                           ),
                                         ),
-                                        child: Icon(
-                                          Icons.favorite_border_rounded,
-                                          color: Colors.white,
-                                          size: 15,
-                                        ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: data.image != null ? Image.network(data.image!): Image.asset(""),
-                                    ),
-                                    data.name != null ?Text(data.name!,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),) : Text(""),
-                                    Row(
-                                      children: [
-                                      data.price != null ? Expanded(child: Text(data.price!)) : Text(""),
-                                        mColors.length > 4
-                                            ? Row(
-                                          children: List.generate(4, (
-                                              index,
-                                              ) {
-                                            if (index == 3) {
-                                              return Container(
-                                                margin: EdgeInsets.only(
-                                                  left: 2,
-                                                ),
-                                                width: 20,
-                                                height: 20,
-                                                decoration:
-                                                BoxDecoration(
-                                                  shape: BoxShape
-                                                      .circle,
-                                                  border: Border.all(
-                                                    color:
-                                                    Colors.grey,
+                                      Expanded(
+                                          child:  Image.network(data.image)
+                                      ),
+                                      Text(data.name,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                                      Row(
+                                        children: [
+                                          Expanded(child: Text(data.price)) ,
+                                          mColors.length > 4
+                                              ? Row(
+                                            children: List.generate(4, (
+                                                index,
+                                                ) {
+                                              if (index == 3) {
+                                                return Container(
+                                                  margin: EdgeInsets.only(
+                                                    left: 2,
                                                   ),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    "+${mColors.length - 3}",
-                                                    style: TextStyle(
-                                                      fontSize: 11,
+                                                  width: 20,
+                                                  height: 20,
+                                                  decoration:
+                                                  BoxDecoration(
+                                                    shape: BoxShape
+                                                        .circle,
+                                                    border: Border.all(
                                                       color:
                                                       Colors.grey,
                                                     ),
                                                   ),
-                                                ),
-                                              );
-                                            } else {
-                                              return Container(
-                                                margin: EdgeInsets.only(
-                                                  left: 2,
-                                                ),
-                                                width: 20,
-                                                height: 20,
-                                                decoration: BoxDecoration(
-                                                  shape:
-                                                  BoxShape.circle,
-                                                  border: Border.all(
-                                                    color:
-                                                    mColors[index],
+                                                  child: Center(
+                                                    child: Text(
+                                                      "+${mColors.length - 3}",
+                                                      style: TextStyle(
+                                                        fontSize: 11,
+                                                        color:
+                                                        Colors.grey,
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                                child: Container(
-                                                  margin:
-                                                  EdgeInsets.all(1),
-                                                  decoration:
-                                                  BoxDecoration(
-                                                    shape: BoxShape
-                                                        .circle,
-                                                    color:
-                                                    mColors[index],
+                                                );
+                                              } else {
+                                                return Container(
+                                                  margin: EdgeInsets.only(
+                                                    left: 2,
                                                   ),
-                                                ),
-                                              );
-                                            }
-                                          }),
-                                        )
-                                            : Row(
-                                          children: List.generate(
-                                            mColors.length,
-                                                (index) {
-                                              return Container(
-                                                margin: EdgeInsets.only(
-                                                  left: 2,
-                                                ),
-                                                width: 20,
-                                                height: 20,
-                                                decoration: BoxDecoration(
-                                                  shape:
-                                                  BoxShape.circle,
-                                                  border: Border.all(
-                                                    color:
-                                                    mColors[index],
+                                                  width: 20,
+                                                  height: 20,
+                                                  decoration: BoxDecoration(
+                                                    shape:
+                                                    BoxShape.circle,
+                                                    border: Border.all(
+                                                      color:
+                                                      mColors[index],
+                                                    ),
                                                   ),
-                                                ),
-                                                child: Container(
-                                                  margin:
-                                                  EdgeInsets.all(1),
-                                                  decoration:
-                                                  BoxDecoration(
-                                                    shape: BoxShape
-                                                        .circle,
-                                                    color:
-                                                    mColors[index],
+                                                  child: Container(
+                                                    margin:
+                                                    EdgeInsets.all(1),
+                                                    decoration:
+                                                    BoxDecoration(
+                                                      shape: BoxShape
+                                                          .circle,
+                                                      color:
+                                                      mColors[index],
+                                                    ),
                                                   ),
-                                                ),
-                                              );
-                                            },
+                                                );
+                                              }
+                                            }),
+                                          )
+                                              : Row(
+                                            children: List.generate(
+                                              mColors.length,
+                                                  (index) {
+                                                return Container(
+                                                  margin: EdgeInsets.only(
+                                                    left: 2,
+                                                  ),
+                                                  width: 20,
+                                                  height: 20,
+                                                  decoration: BoxDecoration(
+                                                    shape:
+                                                    BoxShape.circle,
+                                                    border: Border.all(
+                                                      color:
+                                                      mColors[index],
+                                                    ),
+                                                  ),
+                                                  child: Container(
+                                                    margin:
+                                                    EdgeInsets.all(1),
+                                                    decoration:
+                                                    BoxDecoration(
+                                                      shape: BoxShape
+                                                          .circle,
+                                                      color:
+                                                      mColors[index],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
                                           ),
-                                        ),
 
-                                      ],
-                                    ),
-                                  ],
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ) : Center(child: Text("No Meta data found"),);
-                        },
-                      );
+                            ) : Center(child: Text("No Meta data found"),);
+                          },
+                        );
+
                     }
                     return Container();
                   }

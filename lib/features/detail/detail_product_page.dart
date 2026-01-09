@@ -109,7 +109,7 @@ class _DetailPageState extends State<DetailPage> {
                                     borderRadius: BorderRadius.circular(20),
                                     image: DecorationImage(
 
-                                      image: NetworkImage(mProduct.image!),
+                                      image: NetworkImage(mProduct.image),
                                     ),),
                                 );
                           },
@@ -178,14 +178,14 @@ class _DetailPageState extends State<DetailPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            mProduct.name!,
+                            mProduct.name,
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            "\$ ${mProduct.price!}",
+                            "\$ ${mProduct.price}",
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
@@ -427,7 +427,7 @@ class _DetailPageState extends State<DetailPage> {
                             context.read<CartBloc>().add(
                               AddToCartEvent(
                                 quantity: quantity,
-                                productId: int.parse(mProduct.id!),
+                                productId: int.parse(mProduct.id),
                               ),
                             );
                           },

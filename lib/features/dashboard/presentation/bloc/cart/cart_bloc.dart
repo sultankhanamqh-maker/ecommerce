@@ -1,3 +1,4 @@
+import 'package:ecommerce/core/constants/app_constants.dart';
 import 'package:ecommerce/features/dashboard/data/model/cart_model.dart';
 import 'package:ecommerce/features/dashboard/data/repository/cart_repository.dart';
 import 'package:ecommerce/features/dashboard/presentation/bloc/cart/cart_event.dart';
@@ -79,41 +80,71 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
   Future<void> _deleteCart(DeleteCartEvent event, Emitter<CartState> emit) async {
-    emit(CartLoadingState());
+    var currentState = state;
+    if(currentState is !CartLoadedState) return;
+    var updateCart = currentState.allCart!.where((item)=>
+      item.id != event.catId).toList();
 
     try {
       var res = await apiServices.postApi(url: AppUrls.deleteOrderUrl, mBody: {
         "cart_id": event.catId
       });
       if (res["status"] == true || res["status"] == "true") {
-        add(ViewCartEvent());
+        emit(CartLoadedState(allCart: updateCart));
+
       }
       else {
         emit(CartErrorState(errorMsg: res["message"]));
       }
     }
     catch(e){
+      emit(currentState);
       emit(CartErrorState(errorMsg: e.toString()));
     }
   }
   Future<void> _decrementCart(DecrementCartEvent event, Emitter<CartState> emit) async {
-    emit(CartLoadingState());
+    final currentState = state;
+
+    if (currentState is! CartLoadedState) return;
+
+
+    final updatedCart = currentState.allCart!.map((item) {
+      if (item.productId == event.productId) {
+        return item.copyWith(
+          quantity: item.quantity! - 1,
+        );
+      }
+      return item;
+    }).toList();
+    emit(
+      CartLoadedState(
+        allCart: updatedCart,
+        updatingProductId: event.productId,
+      ),
+    );
 
     try {
       var res = await apiServices.postApi(url: AppUrls.decrementQuantityUrl, mBody: {
+        "user_id":AppConstants.tokenLoginKey,
         "product_id": event.productId,
         "quantity": event.quantity
       });
       if (res["status"] == true || res["status"] == "true") {
-        add(ViewCartEvent());
+        emit(
+          CartLoadedState(
+            allCart: updatedCart,
+            updatingProductId: null,
+          ),
+        );
       }
       else {
         emit(CartErrorState(errorMsg: res["message"]));
       }
     }
     catch(e){
+      emit(currentState);
       emit(CartErrorState(errorMsg: e.toString()));
-
     }
   }
+
 }

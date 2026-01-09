@@ -1,31 +1,38 @@
 class ProductModel {
-  String? id;
-  String? name;
-  String? price;
-  String? image;
-  String? categoryId;
-  String? status;
-  String? createdAt;
-  String? updatedAt;
+  final String id;
+  final String name;
+  final String price;
+  final String image;
+  final int categoryId;
+  final int status;
+  final String createdAt;
+  final String updatedAt;
 
-  ProductModel(
-      {this.id,
-        this.name,
-        this.price,
-        this.image,
-        this.categoryId,
-        this.status,
-        this.createdAt,
-        this.updatedAt});
+  ProductModel({
+    required this.id,
+    required this.name,
+    required this.price,
+    required this.image,
+    required this.categoryId,
+    required this.status,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    price = json['price'].toString();
-    image = json['image'];
-    categoryId = json['category_id'];
-    status = json['status'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
+    return ProductModel(
+      id: json['id']?.toString() ?? "",
+      name: json['name'].toString() ?? "",
+      price: json['price'].toString() ?? "",
+      image: json['image'] ?? "",
+      categoryId: json['category_id'] is int
+          ? json['category_id']
+          : int.tryParse(json['category_id'].toString()) ?? 0,
+      status: json['status'] is int
+          ? json['status']
+          : int.tryParse(json['status'].toString()) ?? 0,
+      createdAt: json['created_at'] ?? "",
+      updatedAt: json['updated_at'] ?? "",
+    );
   }
 }
